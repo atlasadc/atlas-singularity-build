@@ -14,3 +14,6 @@ EOD
 cd ~/rpmbuild/SPECS
 rpmbuild -ba singularity.spec
 cd -
+rpm2cpio ~/rpmbuild/RPMS/x86_64/singularity-${SINGULARITY_VER}-${SINGULARITY_REV}*.x86_64.rpm | cpio -idumv
+tar cvfz singularity-${SINGULARITY_VER}.tar.gz ${PREFIX}
+exit
