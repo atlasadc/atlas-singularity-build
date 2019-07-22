@@ -3,6 +3,7 @@ SINGULARITY_VER=$1
 SINGULARITY_REV=${2:-1}
 OS_REL=${3:-fc31}
 PREFIX=${4:-/cvmfs/atlas.cern.ch/repo/containers/sw/singularity/x86_64-el7/$SINGULARITY_VER}
+CDIR=$PWD
 [ "$SINGULARITY_REV" != "1" ] && PREFIX=${PREFIX}-${SINGULARITY_REV}
 rpm -Uhv https://kojipkgs.fedoraproject.org/packages/singularity/${SINGULARITY_VER}/${SINGULARITY_REV}.${OS_REL}/src/singularity-${SINGULARITY_VER}-${SINGULARITY_REV}.${OS_REL}.src.rpm
 cat > ~/.rpmmacros <<EOD
@@ -13,7 +14,10 @@ EOD
 
 cd ~/rpmbuild/SPECS
 rpmbuild -ba singularity.spec
-cd -
-rpm2cpio ~/rpmbuild/RPMS/x86_64/singularity-${SINGULARITY_VER}-${SINGULARITY_REV}*.x86_64.rpm | cpio -idumv
-tar cvfz singularity-${SINGULARITY_VER}.tar.gz ${PREFIX}
+echo Installing singularity-${SINGULARITY_VER}-${SINGULARITY_REV}*.x86_64.rpm
+rpm -Uhv ~/rpmbuild/RPMS/x86_64/singularity-${SINGULARITY_VER}-${SINGULARITY_REV}*.x86_64.rpm
+cd `dirname $PREFIX`
+echo Creating tarball /root/singularity-${SINGULARITY_VER}.tar.gz
+tar cfz /root/singularity-${SINGULARITY_VER}.tar.gz `basename ${PREFIX}`
+cd $CDIR
 exit
