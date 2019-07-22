@@ -9,5 +9,5 @@ RUN yum -y install epel-release && \
     #
     # Final update and creation of the package list
     yum -y update && \
-    rpm -qa > /var/lib/package-list && \
+    rpm -qa > /var/lib/package-list
 COPY build-singularity /bin
