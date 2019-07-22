@@ -18,7 +18,7 @@ echo Installing singularity-${SINGULARITY_VER}-${SINGULARITY_REV}*.x86_64.rpm
 [ -s ~/rpmbuild/RPMS/x86_64/singularity-runtime-${SINGULARITY_VER}-${SINGULARITY_REV}*.x86_64.rpm ] && SINGULARITY_DEPS=~/rpmbuild/RPMS/x86_64/singularity-runtime-${SINGULARITY_VER}-${SINGULARITY_REV}*.x86_64.rpm
 rpm -Uhv ~/rpmbuild/RPMS/x86_64/singularity-${SINGULARITY_VER}-${SINGULARITY_REV}*.x86_64.rpm $SINGULARITY_DEPS
 cd `dirname $PREFIX`
-echo Creating tarball /root/singularity-${SINGULARITY_VER}.tar.gz
+echo Creating tarball /root/singularity-${SINGULARITY_VER}-${SINGULARITY_REV}.tar.gz
 tar cfz /root/singularity-${SINGULARITY_VER}-${SINGULARITY_REV}.tar.gz `basename ${PREFIX}`
 cd $CDIR
 exit
