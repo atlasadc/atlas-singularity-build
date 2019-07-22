@@ -3,8 +3,8 @@ SINGULARITY_VER=$1
 SINGULARITY_REV=${2:-1}
 OS_REL=${3:-fc31}
 PREFIX=${4:-/cvmfs/atlas.cern.ch/repo/containers/sw/singularity/x86_64-el7/$SINGULARITY_VER}
-rpm -Uhv https://kojipkgs.fedoraproject.org/packages/singularity/${SINGULARITY_VER}/${SINGULARITY_REV}.${OS_REL}/src/singularity-${SINGULARITY_VER}-${SINGULARITY_REV}.${OS_REL}.src.rpm
 [ "$SINGULARITY_REV" != "1" ] && PREFIX=${PREFIX}-${SINGULARITY_REV}
+rpm -Uhv https://kojipkgs.fedoraproject.org/packages/singularity/${SINGULARITY_VER}/${SINGULARITY_REV}.${OS_REL}/src/singularity-${SINGULARITY_VER}-${SINGULARITY_REV}.${OS_REL}.src.rpm
 cat > ~/.rpmmacros <<EOD
 %_prefix $PREFIX
 %_sysconfdir ${PREFIX}/etc
