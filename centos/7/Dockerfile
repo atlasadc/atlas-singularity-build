@@ -5,7 +5,7 @@ LABEL maintainer="Alessandro.DeSalvo@roma1.infn.it"
 RUN yum -y install epel-release && \
     yum groupinstall -y 'Development Tools' && \
     yum install -y openssl-devel libuuid-devel libseccomp-devel wget squashfs-tools golang && \
-    yum -y instal openssh-clients && \
+    yum -y install openssh-clients && \
     #
     # Final update and creation of the package list
     yum -y update && \
