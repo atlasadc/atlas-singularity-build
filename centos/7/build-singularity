@@ -13,11 +13,15 @@ cat > ~/.rpmmacros <<EOD
 EOD
 
 cd ~/rpmbuild/SPECS
+# Remove the libseccomp dependency
+sed -i '/libseccomp-devel/ s/^#*/#/' singularity.spec
 rpmbuild -ba singularity.spec
 echo Installing singularity-${SINGULARITY_VER}-${SINGULARITY_REV}*.x86_64.rpm
 [ -s ~/rpmbuild/RPMS/x86_64/singularity-runtime-${SINGULARITY_VER}-${SINGULARITY_REV}*.x86_64.rpm ] && SINGULARITY_DEPS=~/rpmbuild/RPMS/x86_64/singularity-runtime-${SINGULARITY_VER}-${SINGULARITY_REV}*.x86_64.rpm
 rpm -Uhv ~/rpmbuild/RPMS/x86_64/singularity-${SINGULARITY_VER}-${SINGULARITY_REV}*.x86_64.rpm $SINGULARITY_DEPS
 cd `dirname $PREFIX`
+# Remove starter-suid
+[ -f ${PREFIX}/libexec/singularity/bin/starter-suid ] && rm -f ${PREFIX}/libexec/singularity/bin/starter-suid
 echo Creating tarball /root/singularity-${SINGULARITY_VER}-${SINGULARITY_REV}.tar.gz
 tar cfz /root/singularity-${SINGULARITY_VER}-${SINGULARITY_REV}.tar.gz `basename ${PREFIX}`
 cd $CDIR
