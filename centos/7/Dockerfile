@@ -1,4 +1,4 @@
-FROM quay.io/centos/centos:7
+FROM centos:7
 LABEL maintainer="Alessandro.DeSalvo@roma1.infn.it"
 
 # Singularity build system
