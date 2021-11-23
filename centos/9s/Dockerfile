@@ -2,9 +2,8 @@ FROM quay.io/centos/centos:stream9
 LABEL maintainer="Alessandro.DeSalvo@roma1.infn.it"
 
 # Singularity build system
-RUN dnf -y install epel-release && \
-    dnf groupinstall -y 'Development Tools' && \
-    dnf install -y openssl-devel libuuid-devel wget squashfs-tools golang which python36 cryptsetup && \
+RUN dnf groupinstall -y 'Development Tools' && \
+    dnf install -y openssl-devel libuuid-devel wget squashfs-tools golang which python cryptsetup && \
     dnf -y install openssh-clients && \
     #
     # Final update and creation of the package list
