@@ -11,4 +11,4 @@ RUN dnf -y install epel-release && \
     dnf -y update && \
     echo "el8" > /build-platform && \
     rpm -qa > /var/lib/package-list
-COPY build-singularity build-apptainer /bin
+COPY build-singularity build-apptainer /bin/
