@@ -32,7 +32,7 @@ ARCH="`uname -m`"
 BUILD_PLATF="`/bin/cat /build-platform`"
 PREFIX=/cvmfs/atlas.cern.ch/repo/containers/sw/singularity/${ARCH}-${BUILD_PLATF}/${SINGULARITY_VER}
 
-OPTS=`getopt -o ho:p:r:tv -l help,osrel:,platform:,revision:,trial,version: -- "$@"`
+OPTS=`getopt -o ho:p:r:tv: -l help,osrel:,platform:,revision:,trial,version: -- "$@"`
 if [ $? != 0 ] ; then echo "Terminating..."; exit -1 ; fi
 eval set -- "$OPTS"
 
