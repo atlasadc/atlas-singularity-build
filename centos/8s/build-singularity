@@ -30,7 +30,6 @@ OS_REL=fc35
 CDIR=$PWD
 ARCH="`uname -m`"
 BUILD_PLATF="`/bin/cat /build-platform`"
-PREFIX=/cvmfs/atlas.cern.ch/repo/containers/sw/singularity/${ARCH}-${BUILD_PLATF}/${SINGULARITY_VER}
 
 OPTS=`getopt -o ho:p:r:tv: -l help,osrel:,platform:,revision:,trial,version: -- "$@"`
 if [ $? != 0 ] ; then echo "Terminating..."; exit -1 ; fi
@@ -51,6 +50,7 @@ while true ; do
     esac
 done
 
+[ -z "$PREFIX" ] && PREFIX=/cvmfs/atlas.cern.ch/repo/containers/sw/singularity/${ARCH}-${BUILD_PLATF}/${SINGULARITY_VER}
 [ "$SINGULARITY_REV" != "1" ] && PREFIX=${PREFIX}-${SINGULARITY_REV}
 rpm -Uhv https://kojipkgs.fedoraproject.org/packages/singularity/${SINGULARITY_VER}/${SINGULARITY_REV}.${OS_REL}/src/singularity-${SINGULARITY_VER}-${SINGULARITY_REV}.${OS_REL}.src.rpm
 cat > ~/.rpmmacros <<EOD

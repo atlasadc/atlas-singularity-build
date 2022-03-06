@@ -12,4 +12,4 @@ RUN yum -y install epel-release && \
     yum -y update && \
     echo "el6" > /build-platform && \
     rpm -qa > /var/lib/package-list
-COPY build-singularity build-apptainer /bin/
+COPY build-singularity /bin/
