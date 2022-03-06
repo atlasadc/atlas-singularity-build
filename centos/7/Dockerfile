@@ -11,4 +11,4 @@ RUN yum -y install epel-release && \
     yum -y update && \
     echo "el7" > /build-platform && \
     rpm -qa > /var/lib/package-list
-COPY build-singularity /bin
+COPY build-singularity build-apptainer /bin

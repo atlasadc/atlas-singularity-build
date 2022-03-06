@@ -10,4 +10,4 @@ RUN dnf groupinstall -y 'Development Tools' && \
     dnf -y update && \
     echo "el9" > /build-platform && \
     rpm -qa > /var/lib/package-list
-COPY build-singularity /bin
+COPY build-singularity build-apptainer /bin
