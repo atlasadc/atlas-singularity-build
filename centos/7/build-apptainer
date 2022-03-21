@@ -50,7 +50,7 @@ while true ; do
     esac
 done
 
-[ -z "$PREFIX" ] && PREFIX=/cvmfs/atlas.cern.ch/repo/containers/sw/singularity/${ARCH}-${BUILD_PLATF}/${SINGULARITY_VER}
+[ -z "$PREFIX" ] && PREFIX=/cvmfs/atlas.cern.ch/repo/containers/sw/apptainer/${ARCH}-${BUILD_PLATF}/${APPTAINER_VER}
 [ "$APPTAINER_REV" != "1" ] && PREFIX=${PREFIX}-${APPTAINER_REV}
 rpm -Uhv https://kojipkgs.fedoraproject.org/packages/apptainer/${APPTAINER_VER}/${APPTAINER_REV}.${OS_REL}/src/apptainer-${APPTAINER_VER}-${APPTAINER_REV}.${OS_REL}.src.rpm
 cat > ~/.rpmmacros <<EOD
@@ -67,7 +67,7 @@ echo Installing apptainer-${APPTAINER_VER}-${APPTAINER_REV}*.${ARCH}.rpm
 rpm -Uhv ~/rpmbuild/RPMS/${ARCH}/apptainer-${APPTAINER_VER}-${APPTAINER_REV}*.${ARCH}.rpm $APPTAINER_DEPS
 cd `dirname $PREFIX`
 rm -f ${PREFIX}/libexec/apptainer/bin/starter-suid
-echo Creating tarball /root/apptainer-${APPTAINER_VER}-${APPTAINER_REV}.tar.gz
-tar cfz /root/apptainer-${APPTAINER_VER}-${APPTAINER_REV}.tar.gz `basename ${PREFIX}`
+echo Creating tarball /root/apptainer-${APPTAINER_VER}-${APPTAINER_REV}-${ARCH}.${BUILD_PLATF}.tar.gz
+tar cfz /root/apptainer-${APPTAINER_VER}-${APPTAINER_REV}-${ARCH}.${BUILD_PLATF}.tar.gz `basename ${PREFIX}`
 cd $CDIR
 exit
