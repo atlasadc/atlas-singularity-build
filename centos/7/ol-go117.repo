@@ -1,0 +1,7 @@
+[ol-go116]
+name=Oracle Linux 7 ($basearch) Go Language 1.17 for Development
+baseurl=http://yum.oracle.com/repo/OracleLinux/OL7/developer/golang117/$basearch
+failovermethod=priority
+skip_if_unavailable=1
+enabled=1
+gpgcheck=0

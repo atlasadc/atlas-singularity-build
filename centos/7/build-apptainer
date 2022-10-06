@@ -64,6 +64,7 @@ sed -i '/libseccomp-devel/ s/^#*/#/' apptainer.spec
 rpmbuild -ba apptainer.spec
 echo Installing apptainer-${APPTAINER_VER}-${APPTAINER_REV}*.${ARCH}.rpm
 [ -s ~/rpmbuild/RPMS/${ARCH}/apptainer-runtime-${APPTAINER_VER}-${APPTAINER_REV}*.${ARCH}.rpm ] && APPTAINER_DEPS=~/rpmbuild/RPMS/${ARCH}/apptainer-runtime-${APPTAINER_VER}-${APPTAINER_REV}*.${ARCH}.rpm
+[ -s ~/rpmbuild/RPMS/${ARCH}/apptainer-suid-${APPTAINER_VER}-${APPTAINER_REV}*.${ARCH}.rpm ] && APPTAINER_DEPS="$APPTAINER_DEPS ~/rpmbuild/RPMS/${ARCH}/apptainer-suid-${APPTAINER_VER}-${APPTAINER_REV}*.${ARCH}.rpm"
 rpm -Uhv ~/rpmbuild/RPMS/${ARCH}/apptainer-${APPTAINER_VER}-${APPTAINER_REV}*.${ARCH}.rpm $APPTAINER_DEPS
 cd `dirname $PREFIX`
 rm -f ${PREFIX}/libexec/apptainer/bin/starter-suid
