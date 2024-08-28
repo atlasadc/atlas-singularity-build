@@ -16,7 +16,7 @@ Usage: `basename $0` [OPTION]
                                       current: 1
    --trial|-t                         Trial run
    --version|-v <version>             Singularity version to build
-                                      current: $APPTAINER_VER
+                                      current: $SINGULARITY_VER
 
 $VERSION
 Alessandro De Salvo <Alessandro.DeSalvo@roma1.infn.it>
@@ -24,9 +24,9 @@ EOD
 }
 
 # Defaults
-APPTAINER_VER="1.0.0"
-APPTAINER_REV=1
-OS_REL=fc37
+SINGULARITY_VER="3.8.4"
+SINGULARITY_REV=1
+OS_REL=fc35
 CDIR=$PWD
 ARCH="`uname -m`"
 BUILD_PLATF="`/bin/cat /build-platform`"
@@ -41,18 +41,18 @@ while true ; do
         --osrel|-o)       OS_REL="$2";shift 2;;
         --platform|-P)    BUILD_PLATF="$2";shift 2;;
         --prefix|-p)      PREFIX="$2";shift 2;;
-        --revision|-r)    APPTAINER_REV="$2";shift 2;;
+        --revision|-r)    SINGULARITY_REV="$2";shift 2;;
         --trial|-t)       TRIAL="y";shift;;
-        --version|-v)     APPTAINER_VER="$2";shift 2;;
+        --version|-v)     SINGULARITY_VER="$2";shift 2;;
         --)               shift;break;;
         \?)               break;
         exit;;
     esac
 done
 
-[ -z "$PREFIX" ] && PREFIX=/cvmfs/atlas.cern.ch/repo/containers/sw/apptainer/${ARCH}-${BUILD_PLATF}/${APPTAINER_VER}
-[ "$APPTAINER_REV" != "1" ] && PREFIX=${PREFIX}-${APPTAINER_REV}
-rpm -Uhv https://kojipkgs.fedoraproject.org/packages/apptainer/${APPTAINER_VER}/${APPTAINER_REV}.${OS_REL}/src/apptainer-${APPTAINER_VER}-${APPTAINER_REV}.${OS_REL}.src.rpm
+[ -z "$PREFIX" ] && PREFIX=/cvmfs/atlas.cern.ch/repo/containers/sw/singularity/${ARCH}-${BUILD_PLATF}/${SINGULARITY_VER}
+[ "$SINGULARITY_REV" != "1" ] && PREFIX=${PREFIX}-${SINGULARITY_REV}
+rpm -Uhv https://kojipkgs.fedoraproject.org/packages/singularity/${SINGULARITY_VER}/${SINGULARITY_REV}.${OS_REL}/src/singularity-${SINGULARITY_VER}-${SINGULARITY_REV}.${OS_REL}.src.rpm
 cat > ~/.rpmmacros <<EOD
 %_prefix $PREFIX
 %_sysconfdir ${PREFIX}/etc
@@ -60,15 +60,14 @@ cat > ~/.rpmmacros <<EOD
 EOD
 
 cd ~/rpmbuild/SPECS
-sed -i '/libseccomp-devel/ s/^#*/#/' apptainer.spec
-rpmbuild -ba apptainer.spec
-echo Installing apptainer-${APPTAINER_VER}-${APPTAINER_REV}*.${ARCH}.rpm
-[ -s ~/rpmbuild/RPMS/${ARCH}/apptainer-runtime-${APPTAINER_VER}-${APPTAINER_REV}*.${ARCH}.rpm ] && APPTAINER_DEPS=~/rpmbuild/RPMS/${ARCH}/apptainer-runtime-${APPTAINER_VER}-${APPTAINER_REV}*.${ARCH}.rpm
-[ -s ~/rpmbuild/RPMS/${ARCH}/apptainer-suid-${APPTAINER_VER}-${APPTAINER_REV}*.${ARCH}.rpm ] && APPTAINER_DEPS="$APPTAINER_DEPS ~/rpmbuild/RPMS/${ARCH}/apptainer-suid-${APPTAINER_VER}-${APPTAINER_REV}*.${ARCH}.rpm"
-rpm -Uhv ~/rpmbuild/RPMS/${ARCH}/apptainer-${APPTAINER_VER}-${APPTAINER_REV}*.${ARCH}.rpm $APPTAINER_DEPS
+sed -i '/libseccomp-devel/ s/^#*/#/' singularity.spec
+rpmbuild -ba singularity.spec
+echo Installing singularity-${SINGULARITY_VER}-${SINGULARITY_REV}*.${ARCH}.rpm
+[ -s ~/rpmbuild/RPMS/${ARCH}/singularity-runtime-${SINGULARITY_VER}-${SINGULARITY_REV}*.${ARCH}.rpm ] && SINGULARITY_DEPS=~/rpmbuild/RPMS/${ARCH}/singularity-runtime-${SINGULARITY_VER}-${SINGULARITY_REV}*.${ARCH}.rpm
+rpm -Uhv ~/rpmbuild/RPMS/${ARCH}/singularity-${SINGULARITY_VER}-${SINGULARITY_REV}*.${ARCH}.rpm $SINGULARITY_DEPS
 cd `dirname $PREFIX`
-rm -f ${PREFIX}/libexec/apptainer/bin/starter-suid
-echo Creating tarball /root/apptainer-${APPTAINER_VER}-${APPTAINER_REV}-${ARCH}.${BUILD_PLATF}.tar.gz
-tar cfz /root/apptainer-${APPTAINER_VER}-${APPTAINER_REV}-${ARCH}.${BUILD_PLATF}.tar.gz `basename ${PREFIX}`
+rm -f ${PREFIX}/libexec/singularity/bin/starter-suid
+echo Creating tarball /root/singularity-${SINGULARITY_VER}-${SINGULARITY_REV}.tar.gz
+tar cfz /root/singularity-${SINGULARITY_VER}-${SINGULARITY_REV}.tar.gz `basename ${PREFIX}`
 cd $CDIR
 exit
