@@ -1,4 +1,6 @@
 #!/bin/sh
+# Script to build container releases and push them
+
 OSREL=${1}
 if [ -z "$OSREL" ] ; then                                                                                                                                 
   FULLPATH="`\ls $PWD/Dockerfile 2>/dev/null`"                                                                                                            
