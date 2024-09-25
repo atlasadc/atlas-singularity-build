@@ -57,6 +57,7 @@ cat > ~/.rpmmacros <<EOD
 %_prefix $PREFIX
 %_sysconfdir ${PREFIX}/etc
 %_localstatedir ${PREFIX}/var
+%_sharedstatedir ${PREFIX}/var/lib
 EOD
 
 cd ~/rpmbuild/SPECS
